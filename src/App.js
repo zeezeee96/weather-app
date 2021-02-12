@@ -25,4 +25,7 @@ import Fetchapi from './components/fetchapi';
   );
 }
 
+function Home() {
+  return <h2>This is the routing app. Switching two apps</h2>;
+}
 export default App;
