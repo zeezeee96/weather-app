@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { API_BASE_URL,API_AUTOCOMPLETE_URL, API_KEY, API_TOPCITIES_URL } from "../constants/constants";
+import { API_BASE_URL,API_AUTOCOMPLETE_URL, API_KEY, API_TOPCITIES_URL, API_CITYSEARCH_URL } from "../constants/constants";
 
 export const searchCities =  (query) => {
   return  new Promise ((resolve,reject) => {
@@ -20,4 +20,12 @@ export const getTopCities =  () => {
       }}).then((response) => resolve(response.data))
   })
 };
-
+export const getCityDetail =  (id) => {
+ 
+  return new Promise ((resolve,reject)=> {
+    axios.get(API_BASE_URL+API_CITYSEARCH_URL+id, {
+      params: {
+        apikey: API_KEY
+      }}).then((response) => resolve(response.data))
+  })
+};

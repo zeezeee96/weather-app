@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
-import Weatherdetails from './components/Weatherdetails';
-import Home from './components/Home';
+import Weatherdetails from './pages/Weatherdetail';
+import Home from './pages/Home';
 
  function App() {
    
@@ -12,7 +12,7 @@ import Home from './components/Home';
         <Route exact path="/">
             <Home />
           </Route>
-          <Route path="/weatherdetails">
+          <Route path="/details/:name/:id">
             <Weatherdetails/>
           </Route>
         </Switch>
