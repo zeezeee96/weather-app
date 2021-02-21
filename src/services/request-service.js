@@ -26,6 +26,6 @@ export const getCityDetail =  (id) => {
     axios.get(API_BASE_URL+API_CITYSEARCH_URL+id, {
       params: {
         apikey: API_KEY
-      }}).then((response) => resolve(response.data))
+      }}).then((response) => resolve(response.data[0]))
   })
 };

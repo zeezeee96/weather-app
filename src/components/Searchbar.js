@@ -7,33 +7,43 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 export const SearchBar = () => {
   const [query, setQuery] = useState("");
   const [options, setOptions] = useState([]);
-  let history = useHistory();
+  const history = useHistory();
+
   const search = (newInputValue) => {
     setQuery(newInputValue);
     searchCities(newInputValue).then((data) => setOptions(data));
   };
+
+  const handleOptionSelection = ({ Key, LocalizedName }) => {
+    history.push(`/details/${LocalizedName}/${Key}`);
+  };
+
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+        alignItems: "center",
+        marginBottom: 50
+      }}
+    >
+      <h1>Zee Zee's Weather Forecast</h1>
       <Autocomplete
         id="weather-search"
-        onChange={(event, newValue) => {
-          console.log(newValue)
-          let id = newValue.Key
-          let name= newValue.LocalizedName
-          history.push(`/details/${name}/${id}`);
-        }}
+        style={{ width: "100%" }}
+        onChange={(event, newValue) => handleOptionSelection(newValue)}
         inputValue={query}
         onInputChange={(event, newInputValue) => search(newInputValue)}
-        options={options}
+        options={options || []}
         getOptionLabel={(option) => option.LocalizedName}
         renderOption={(option) => (
           <React.Fragment>
             {option.LocalizedName} ({option.Country.LocalizedName})
           </React.Fragment>
         )}
-        style={{ width: 300 }}
         renderInput={(params) => (
-          <TextField {...params} label="Search City Name" variant="outlined" />
+          <TextField {...params} label="Search City Name" />
         )}
       />
     </div>
