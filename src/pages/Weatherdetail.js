@@ -1,49 +1,42 @@
-import React, { useState, useEffect  } from 'react';
-import { useHistory } from 'react-router-dom';
-import {getCityDetail} from '../services/request-service' 
-import { BrowserRouter as Router, useParams} from "react-router-dom";
- const Weatherdetails= ()=> {
-const {id, name} = useParams()
-
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { getCityDetail } from "../services/request-service";
+import { useParams } from "react-router-dom";
+const Weatherdetails = () => {
   const [weatherinfo, setWeatherInfo] = useState({});
-  let history = useHistory();
+  const [isLoading, setLoading] = useState(false);
+  const { id, name } = useParams();
+  const history = useHistory();
 
-  useEffect (() => {
-    getCityDetail(id).then((data) => {
-      console.log(data[0])
-      setWeatherInfo(data[0])});
-  },[])
-const callHome = () => {
-  history.push("/");
-}
+  useEffect(() => {
+    setLoading(true);
+    getCityDetail(id)
+      .then((data) => {
+        setWeatherInfo(data);
+        setLoading(false);
+      })
+      .catch((err) => setLoading(false));
+  }, [id]);
+
   return (
-      <div>
-        {weatherinfo.Temperature && (
-          <div>
-        <h3>{name}</h3>
-        <h4>{weatherinfo.Temperature.Metric.Value}<sup>&deg;</sup>C</h4>
-        <h5>{weatherinfo.WeatherText}</h5>
-        </div>
-        )}
-       
-{/* {weatherinfo.main && (
-      <div>
-        <h3>
-          <span>{weatherdata.name}</span>
-          <sup>{weatherdata.sys.country}</sup>
-          </h3>
-        <h4>{weatherdata.main.temp}<sup>&deg;C</sup></h4>
-        <div>
-          <img src={`https://openweathermap.org/img/wn/${weatherdata.weather[0].icon}.png`}/>
-          <p>{weatherdata.weather[0].description}</p>
-        </div>
-      </div>
-      )
-      } */}
-
-
-<button onClick={()=>callHome()}>Back to Search</button>
-      </div>
-  )
-}
+    <div>
+      {isLoading ? (
+        "Loader"
+      ) : (
+        <React.Fragment>
+          {weatherinfo.Temperature && (
+            <div>
+              <h3>{name}</h3>
+              <h4>
+                {weatherinfo.Temperature.Metric.Value}
+                <sup>&deg;</sup>C
+              </h4>
+              <h5>{weatherinfo.WeatherText}</h5>
+            </div>
+          )}
+        </React.Fragment>
+      )}
+    </div>
+  );
+};
 export default Weatherdetails;

@@ -1,23 +1,27 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
-import Weatherdetails from './pages/Weatherdetail';
-import Home from './pages/Home';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Weatherdetails from "./pages/Weatherdetail";
+import Home from "./pages/Home";
+import { SearchBar } from "./components/Searchbar";
+import { Container } from "@material-ui/core";
 
- function App() {
-   
+function App() {
   return (
-    <Router>
-      <div>
-        <Switch>
-        <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/details/:name/:id">
-            <Weatherdetails/>
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+    <div style={{ height: "100vh", width: "100%" }}>
+      <Container>
+        <Router>
+          <SearchBar />
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/details/:name/:id">
+              <Weatherdetails />
+            </Route>
+          </Switch>
+        </Router>
+      </Container>
+    </div>
   );
 }
 
