@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { API_BASE_URL,API_AUTOCOMPLETE_URL, API_KEY, API_TOPCITIES_URL, API_CITYSEARCH_URL } from "../constants/constants";
+import { API_BASE_URL,
+  API_AUTOCOMPLETE_URL, 
+  API_KEY, 
+  API_TOPCITIES_URL, 
+  API_CITYSEARCH_URL,
+  API_GEOLOCATION_URL 
+} from "../constants/constants";
 
 
 export const searchCities =  (query) => {
@@ -29,5 +35,15 @@ export const getCityDetail =  (id) => {
         apikey: API_KEY,
         details: true
       }}).then((response) => resolve(response.data[0]))
+  })
+};
+export const getLocation =  (latitude ,longitude) => {
+  console.log(longitude, latitude)
+  return new Promise ((resolve,reject)=> {
+    axios.get(API_BASE_URL+API_GEOLOCATION_URL+API_KEY, {
+      params: {
+        q: `${latitude},${longitude}`,
+        toplevel: true
+      }}).then((response) => resolve(response.data))
   })
 };

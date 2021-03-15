@@ -5,4 +5,5 @@ export const API_TOPCITIES_URL = 'currentconditions/v1/topcities/50'
 export const API_CITYSEARCH_URL = 'currentconditions/v1/'
 export const API_KEY='oqdvF8PEwwpJJp3snTja00jQG8yUedGK';
 export const IMAGE_BASE_URL = "https://developer.accuweather.com/sites/default/files"
+export const API_GEOLOCATION_URL= 'locations/v1/cities/geoposition/search?apikey='
 // export const API_KEY='3tSogfrMDuGsMXcwC3Iy4MNVwXOXVEZx';
