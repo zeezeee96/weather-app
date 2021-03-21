@@ -10,11 +10,10 @@ export const SearchBar = () => {
   const [options, setOptions] = useState([]);
   const [latitude, setlatitude] = useState("");
   const [longitude, setlongitude] = useState("");
-  const [geoLocationInfo, setGeoLocationInfo] = useState([])
+  const [LocationInfo, setLocationInfo] = useState([]);
   const history = useHistory();
   useEffect(() => {
-    console.log(latitude, longitude);
-    getLocation(latitude, longitude).then((data) => setGeoLocationInfo(data));
+    getLocation(latitude, longitude).then((data) => setLocationInfo(data));
   }, [longitude]);
   const search = (newInputValue) => {
     setQuery(newInputValue);
@@ -27,7 +26,6 @@ export const SearchBar = () => {
   const getGeoLocation = () => {
     navigator.geolocation.getCurrentPosition(getposition);
     function getposition(position) {
-      console.log(position.coords.latitude, position.coords.longitude);
       setlatitude(position.coords.latitude);
       setlongitude(position.coords.longitude);
     }
@@ -45,7 +43,7 @@ export const SearchBar = () => {
         }}
       >
         <h1>Zee Zee's Weather Forecast</h1>
-        <div style={{display:"flex", width:"100%"}}>
+        <div style={{ display: "flex", width: "100%" }}>
           <Autocomplete
             id="weather-search"
             style={{ width: "100%" }}
@@ -64,7 +62,7 @@ export const SearchBar = () => {
             )}
           />
           <div
-          style={{padding:"25px"}}
+            style={{ padding: "25px" }}
             onClick={() => {
               getGeoLocation();
             }}
@@ -72,15 +70,30 @@ export const SearchBar = () => {
             <Icon icon={mapMarker} />
           </div>
         </div>
-        {geoLocationInfo.Key &&  (<p>Did you mean  
-          <button style={{border:"none", color:"blue", fontSize:"16px", textDecoration:"underline"}}
-            onClick={()=> {history.push(`/details/${geoLocationInfo.LocalizedName}/${geoLocationInfo.Key}`)
-            setGeoLocationInfo([])
-            setlongitude("")
-            }}>
-              {geoLocationInfo.LocalizedName}
-              </button>  ? Or Search City Name Manually
-           </p>)}
+        {LocationInfo.Key && (
+          <p>
+            Did you mean
+            <button
+              style={{
+                border: "none",
+                color: "blue",
+                fontSize: "16px",
+                textDecoration: "underline",
+                cursor: "pointer"
+              }}
+              onClick={() => {
+                history.push(
+                  `/details/${LocationInfo.LocalizedName}/${LocationInfo.Key}`
+                );
+                setLocationInfo([]);
+                setlongitude("");
+              }}
+            >
+              {LocationInfo.LocalizedName}
+            </button>{" "}
+            ? Or Search City Name Manually
+          </p>
+        )}
       </div>
     </div>
   );
